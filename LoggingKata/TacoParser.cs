@@ -1,8 +1,6 @@
 ﻿namespace LoggingKata
 {
-    /// <summary>
     /// Parses a POI file to locate all the Taco Bells
-    /// </summary>
     public class TacoParser
     {
         readonly ILog logger = new TacoLogger();
@@ -15,6 +13,7 @@
 
             if (line == null)
             {
+                logger.LogError("Missing information" + line);
                 return null;
             }
             TacoBell trackableTacoBell = new TacoBell();
@@ -31,7 +30,10 @@
             bool longitudeParseSuccess = double.TryParse(cells[1], out double longitude);
 
             if (latitudeParseSuccess == false || longitudeParseSuccess == false)
+            {
+                logger.LogInfo("Fatel Error");
                 return null;
+            }
 
             Location.Latitude = latitude;
             Location.Longitude = longitude;
