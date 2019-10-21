@@ -12,7 +12,8 @@ namespace LoggingKata
 
         static void Main(string[] args)
         {
-            logger.LogInfo("LogInfo");
+            logger.LogInfo("Log Intialized");
+
             var lines = File.ReadAllLines(csvPath);
             var parser = new TacoParser();
             var locations = lines.Select(parser.Parse).ToArray();
@@ -20,6 +21,14 @@ namespace LoggingKata
             ITrackable TacoBell1 = null;
             ITrackable TacoBell2 = null;
             double distance = 0;
+
+
+            if (lines.Length == 0)
+                logger.LogError("Error: 0 lines");
+
+            if(lines.Length == 1)
+                logger.LogWarning("Warning: 1 line");
+
 
             for (int i = 0; i < locations.Length; i++)
             {

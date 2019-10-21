@@ -1,6 +1,5 @@
 ﻿namespace LoggingKata
 {
-    /// Parses a POI file to locate all the Taco Bells
     public class TacoParser
     {
         readonly ILog logger = new TacoLogger();
@@ -8,16 +7,13 @@
         public ITrackable Parse(string line)
         {
             logger.LogInfo("Begin parsing");
-            // Do not fail if one record parsing fails, return null
-            // TODO Implement
 
             if (line == null)
             {
-                logger.LogError("Missing information" + line);
+                logger.LogError("Missing information");
                 return null;
             }
-            TacoBell trackableTacoBell = new TacoBell();
-            Point Location = new Point();
+
             var cells = line.Split(',');
 
             if (cells.Length < 3 || line == null)
@@ -35,13 +31,16 @@
                 return null;
             }
 
+            TacoBell trackableTacoBell = new TacoBell();
+            Point Location = new Point();
+
             Location.Latitude = latitude;
             Location.Longitude = longitude;
             string name = cells[2];
             trackableTacoBell.Name = name;
             trackableTacoBell.Location = Location;
-            return trackableTacoBell;
 
+            return trackableTacoBell;
         }
     }
 }
