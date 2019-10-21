@@ -12,16 +12,16 @@ namespace LoggingKata.Test
             var lines = "34.992219,-86.841402,Taco Bell Ardmore...";
 
             //Assert
-            Assert.Null(parserInstance.Parse(lines));
+            Assert.NotNull(parserInstance.Parse(lines));
         }
 
         [Theory]
-        [InlineData("34.280205,-86.217115,Taco Bell Albertvill...")]
-        [InlineData("34.992219,-86.841402,Taco Bell Ardmore...")]
-        [InlineData("90 , 180, Taco Bell")]
-        [InlineData("-90, -180, Taco Bell ")]
-        [InlineData("0, 0, Taco bell")]
-        public void ShouldParse(string data, string expected)
+        [InlineData("34.280205,-86.217115,Taco Bell Albertvill...", "Taco Bell Albertvill...")]
+        [InlineData("34.992219,-86.841402,Taco Bell Ardmore...", "Taco Bell Ardmore...")]
+        [InlineData("90,180,Taco Bell", "Taco Bell")]
+        [InlineData("-90, -180,Taco Bell", "Taco Bell")]
+        [InlineData("0, 0,Taco bell", "Taco bell")]
+        public void ShouldParseName(string data, string expected)
         {
             // Arrange
             TacoParser location = new TacoParser();
@@ -34,13 +34,13 @@ namespace LoggingKata.Test
         }
 
         [Theory]
-        [InlineData("34.280205,-86.217115,Taco Bell Albertvill..., 34.280205")]
-        [InlineData("34.992219,-86.841402,Taco Bell Ardmore..., 34.992219")]
-        [InlineData("90, 180, Taco Bell, 90")]
-        [InlineData("-90, -180, Taco Bell, -90")]
-        [InlineData("0, 0, Taco bell, 0")]
+        [InlineData("34.280205,-86.217115,Taco Bell Albertvill...", 34.280205)]
+        [InlineData("34.992219,-86.841402,Taco Bell Ardmore...", 34.992219)]
+        [InlineData("90, 180, Taco Bell", 90)]
+        [InlineData("-90, -180, Taco Bell", -90)]
+        [InlineData("0, 0, Taco bell", 0)]
 
-        public void ShouldParse(string data, double expected)
+        public void ShouldParseLatitude(string data, double expected)
         {
             // Arrange
             TacoParser location = new TacoParser();
@@ -53,13 +53,13 @@ namespace LoggingKata.Test
         }
 
         [Theory]
-        [InlineData("34.280205,-86.217115,Taco Bell Albertvill..., -86.217115")]
-        [InlineData("34.992219,-86.841402,Taco Bell Ardmore..., -86.841402")]
-        [InlineData("90, 180, Taco Bell, 180")]
-        [InlineData("-90, -180, Taco Bell, -180")]
-        [InlineData("0, 0, Taco bell, 0")]
+        [InlineData("34.280205,-86.217115,Taco Bell Albertvill...", -86.217115)]
+        [InlineData("34.992219,-86.841402,Taco Bell Ardmore...", -86.841402)]
+        [InlineData("90, 180, Taco Bell", 180)]
+        [InlineData("-90, -180, Taco Bell", -180)]
+        [InlineData("0, 0, Taco bell", 0)]
 
-        public void GoingToParse(string data, double expected)
+        public void ShouldParseLongitude(string data, double expected)
         {
             // Arrange
             TacoParser location = new TacoParser();
